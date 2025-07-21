@@ -8,12 +8,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet var heightTextField: UITextField!
+    @IBOutlet var weightTextField: UITextField!
+    @IBOutlet var verifyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        verifyButton.addTarget(self, action: #selector(verify), for: .touchUpInside)
     }
-
-
+    
+    @objc func verify(_ sender: UIButton) {
+        let vc = ResultViewController()
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
-
