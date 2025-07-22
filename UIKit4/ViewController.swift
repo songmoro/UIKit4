@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     }
     
     @objc func verify(_ sender: UIButton) {
-        let vc = ResultViewController()
+        let vc = NetflixViewController()
         
         navigationController?.pushViewController(vc, animated: true)
     }
