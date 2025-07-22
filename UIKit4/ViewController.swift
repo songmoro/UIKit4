@@ -7,10 +7,31 @@
 
 import UIKit
 
+struct BMI {
+    let height: Double
+    let weight: Double
+    
+    var result: String {
+        get {
+            let value = weight / (height * height)
+            
+            if value < 18.5 {
+                return "저체중"
+            }
+            else {
+                return "정상"
+            }
+        }
+    }
+}
+
 class ViewController: UIViewController {
     @IBOutlet var heightTextField: UITextField!
     @IBOutlet var weightTextField: UITextField!
     @IBOutlet var verifyButton: UIButton!
+    
+    var bmi = BMI(height: 180, weight: 180)
+    var userdefaults = UserDefaultsHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +40,15 @@ class ViewController: UIViewController {
     }
     
     @objc func verify(_ sender: UIButton) {
-        let vc = NetflixViewController()
+        guard let height = heightTextField.text, height.count > 2 else {
+            print("height 입력 오류")
+            return
+        }
+        guard let weight = weightTextField.text, weight.count > 2 else {
+            print("weight 입력 오류")
+            return
+        }
         
-        navigationController?.pushViewController(vc, animated: true)
+        print(height, weight)
     }
 }
