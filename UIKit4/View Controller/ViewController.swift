@@ -39,6 +39,56 @@ class ViewController: UIViewController {
         verifyButton.addTarget(self, action: #selector(verify), for: .touchUpInside)
     }
     
+//    let textField: UITextField = {
+//        let textField = UITextField()
+//        textField.backgroundColor = .red
+//        
+//        return textField
+//    }()
+//    
+//    let scrollView: UIScrollView = {
+//        let scrollView = UIScrollView()
+//        scrollView.backgroundColor = .blue
+//        
+//        return scrollView
+//    }()
+//    
+//    let contentView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .brown
+//        
+//        return view
+//    }()
+//    
+//    
+//    func configureScrollableView() {
+//        scrollView.addSubview(contentView)
+//        contentView.addSubview(textField)
+//        
+//        view.addSubview(scrollView)
+//        
+//        scrollView.keyboardDismissMode = .interactive
+//        scrollView.snp.makeConstraints {
+//            $0.top.equalTo(weightTextField.snp.bottom).offset(200)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(100)
+//        }
+//        
+//        contentView.snp.makeConstraints {
+//            $0.edges.equalTo(scrollView.contentLayoutGuide)
+//            $0.width.equalTo(scrollView.frameLayoutGuide)
+//            $0.height.equalTo(101)
+//        }
+//        
+//        textField.snp.makeConstraints {
+//            $0.centerX.centerX.equalToSuperview()
+//            $0.width.equalToSuperview()
+//            $0.height.equalTo(100)
+//        }
+//        
+//        scrollView.bounces = false
+//    }
+    
     @objc func verify(_ sender: UIButton) {
         let vc = KeyboardDismissViewController()
 //        let vc = MarketViewController()
