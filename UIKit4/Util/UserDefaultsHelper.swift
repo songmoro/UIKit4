@@ -5,6 +5,7 @@
 //  Created by 송재훈 on 7/22/25.
 //
 
+import Foundation
 
 struct UserDefaultsHelper {
     var age: Int {
