@@ -11,10 +11,10 @@ protocol Designable {
     
 }
 
-extension Designable where Self: UIView {
+extension Designable where Self: UIViewController {
     func needsAddSubview(views: UIView...) {
         views.forEach {
-            self.addSubview($0)
+            view.addSubview($0)
         }
     }
     

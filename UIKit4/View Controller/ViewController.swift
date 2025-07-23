@@ -40,15 +40,19 @@ class ViewController: UIViewController {
     }
     
     @objc func verify(_ sender: UIButton) {
-        guard let height = heightTextField.text, height.count > 2 else {
-            print("height 입력 오류")
-            return
-        }
-        guard let weight = weightTextField.text, weight.count > 2 else {
-            print("weight 입력 오류")
-            return
-        }
+        let vc = KeyboardDismissViewController()
+//        let vc = MarketViewController()
+        navigationController?.pushViewController(vc, animated: true)
         
-        print(height, weight)
+//        guard let height = heightTextField.text, height.count > 2 else {
+//            print("height 입력 오류")
+//            return
+//        }
+//        guard let weight = weightTextField.text, weight.count > 2 else {
+//            print("weight 입력 오류")
+//            return
+//        }
+//        
+//        print(height, weight)
     }
 }
