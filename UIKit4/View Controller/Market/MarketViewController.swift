@@ -35,6 +35,8 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.register(MarketCell.self)
+        
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -45,7 +47,7 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(MarketCell.self, for: indexPath)
         
         return cell
     }

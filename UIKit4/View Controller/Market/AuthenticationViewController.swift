@@ -34,7 +34,7 @@ extension AuthenticationViewController: Designable {
     func configure() {
         view.backgroundColor = .systemBackground
         
-        needsAddSubview(views: emailTextField, passwordTextField)
+        view.addSubviews(emailTextField, passwordTextField)
     }
     
     func configureLayout() {

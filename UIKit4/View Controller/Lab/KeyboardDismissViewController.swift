@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class KeyboardDismissViewController: UIViewController {
-    var currentTextField: UITextField?
-    
     let tableView: UITableView = {
         let tableView = UITableView()
         
@@ -36,7 +34,7 @@ class KeyboardDismissViewController: UIViewController {
 extension KeyboardDismissViewController: Designable {
     func configure() {
         view.backgroundColor = .systemBackground
-        needsAddSubview(views: tableView, textField)
+        view.addSubviews(tableView, textField)
     }
 }
 
@@ -52,24 +50,6 @@ extension KeyboardDismissViewController: UITextFieldDelegate {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        print(#function)
-        dismissKeyboard()
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(#function)
-        currentTextField = textField
-    }
-    
-    func dismissKeyboard() {
-        if let currentTextField {
-            currentTextField.resignFirstResponder()
-            self.currentTextField = nil
-        }
-    }
 }
 
 extension KeyboardDismissViewController: UITableViewDelegate, UITableViewDataSource {
@@ -77,15 +57,11 @@ extension KeyboardDismissViewController: UITableViewDelegate, UITableViewDataSou
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 40
+        tableView.keyboardDismissMode = .onDrag
         
         tableView.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print(#function)
-        dismissKeyboard()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
