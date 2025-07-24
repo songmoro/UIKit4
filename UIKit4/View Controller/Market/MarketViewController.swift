@@ -7,8 +7,17 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+
+struct Coin: Decodable {
+    let market: String
+    let korean_name: String
+    let english_name: String
+}
 
 class MarketViewController: UIViewController {
+    var items: [Coin] = []
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         
@@ -23,6 +32,7 @@ class MarketViewController: UIViewController {
         super.viewDidLoad()
         configure()
         configureTableView()
+        request()
     }
 }
 
@@ -42,12 +52,39 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(MarketCell.self, for: indexPath)
         
+        if let cell = cell as? MarketCell {
+            let item = items[indexPath.row]
+            cell.nameLabel.text = item.korean_name
+        }
+        
         return cell
     }
+    
+    func request() {
+        let url = URL(string: "https://api.upbit.com/v1/market/all")!
+        
+        AF.request(url, method: .get)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: [Coin].self) {
+                switch $0.result {
+                case .success(let coins):
+                    self.items = coins
+                    self.tableView.reloadData()
+                default:
+                    break
+                }
+            }
+    }
 }
+
+#if DEBUG
+#Preview {
+    MarketViewController()
+}
+#endif
