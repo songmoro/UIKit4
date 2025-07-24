@@ -9,24 +9,22 @@ import UIKit
 import SnapKit
 
 class AuthenticationViewController: UIViewController {
-    let emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemRed
-        
-        return textField
-    }()
+    let emailTextField: UITextField = FilledTextField(backgroundColor: .systemRed, placeholder: "이메일")
+    let passwordTextField: UITextField = FilledTextField(backgroundColor: .systemBlue, placeholder: "비밀번호")
+    let ageTextField: UITextField = FilledTextField(backgroundColor: .systemBrown, placeholder: "나이")
     
-    let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemBlue
+    let picker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.preferredDatePickerStyle = .wheels
         
-        return textField
+        return picker
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         configureLayout()
+        configurePicker()
     }
 }
 
@@ -34,7 +32,7 @@ extension AuthenticationViewController: Designable {
     func configure() {
         view.backgroundColor = .systemBackground
         
-        view.addSubviews(emailTextField, passwordTextField)
+        view.addSubviews(emailTextField, passwordTextField, ageTextField)
     }
     
     func configureLayout() {
@@ -48,5 +46,23 @@ extension AuthenticationViewController: Designable {
             $0.top.equalTo(emailTextField.snp.bottom).offset(20)
             $0.height.equalTo(44)
         }
+        
+        ageTextField.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            $0.height.equalTo(44)
+        }
+    }
+}
+
+// MARK: Picker
+extension AuthenticationViewController {
+    func configurePicker() {
+        picker.addTarget(self, action: #selector(agePickerValueChanged), for: .valueChanged)
+        ageTextField.inputView = picker
+    }
+    
+    @objc func agePickerValueChanged(_ sender: UIDatePicker) {
+        print(#function, sender)
     }
 }

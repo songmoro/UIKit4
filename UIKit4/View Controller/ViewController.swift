@@ -90,8 +90,8 @@ class ViewController: UIViewController {
 //    }
     
     @objc func verify(_ sender: UIButton) {
-        let vc = KeyboardDismissViewController()
-//        let vc = MarketViewController()
+//        let vc = KeyboardDismissViewController()
+        let vc = AuthenticationViewController()
         navigationController?.pushViewController(vc, animated: true)
         
 //        guard let height = heightTextField.text, height.count > 2 else {

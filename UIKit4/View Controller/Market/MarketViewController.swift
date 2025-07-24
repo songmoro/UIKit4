@@ -9,8 +9,12 @@ import UIKit
 import SnapKit
 
 class MarketViewController: UIViewController {
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(MarketCell.self)
         
         return tableView
     }()
@@ -31,11 +35,6 @@ extension MarketViewController: Designable {
 extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
     func configureTableView() {
         view.addSubview(tableView)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(MarketCell.self)
         
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
