@@ -1,15 +1,15 @@
 //
-//  MarketViewController.swift
+//  BookViewContoller.swift
 //  UIKit4
 //
-//  Created by 송재훈 on 7/23/25.
+//  Created by 송재훈 on 7/25/25.
 //
 
 import UIKit
-import SnapKit
 import Alamofire
+import SnapKit
 
-struct Coin: Decodable {
+struct Book: Decodable {
     let market: String
     let korean_name: String
     let english_name: String
@@ -19,8 +19,8 @@ struct Coin: Decodable {
     }
 }
 
-class MarketViewController: UIViewController {
-    var items: [Coin] = []
+class BookViewContoller: UIViewController {
+    var items: [Book] = []
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -40,13 +40,13 @@ class MarketViewController: UIViewController {
     }
 }
 
-extension MarketViewController: Designable {
+extension BookViewContoller: Designable {
     func configure() {
         view.backgroundColor = .systemBackground
     }
 }
 
-extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
+extension BookViewContoller: UITableViewDelegate, UITableViewDataSource {
     func configureTableView() {
         view.addSubview(tableView)
         
@@ -75,10 +75,10 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
         
         AF.request(url, method: .get)
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: [Coin].self) {
+            .responseDecodable(of: [Book].self) {
                 switch $0.result {
-                case .success(let coins):
-                    self.items = coins
+                case .success(let book):
+                    self.items = book
                     self.tableView.reloadData()
                 default:
                     break
@@ -89,6 +89,6 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
 
 #if DEBUG
 #Preview {
-    MarketViewController()
+    BookViewContoller()
 }
 #endif
