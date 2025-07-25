@@ -9,16 +9,6 @@ import UIKit
 import SnapKit
 import Alamofire
 
-struct Coin: Decodable {
-    let market: String
-    let korean_name: String
-    let english_name: String
-    
-    var labelText: String {
-        "\(market) | \(korean_name)(\(english_name)"
-    }
-}
-
 class MarketViewController: UIViewController {
     var items: [Coin] = []
     
