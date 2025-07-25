@@ -159,8 +159,8 @@ extension BookViewContoller: UITableViewDelegate, UITableViewDataSource {
     func request(_ text: String) {
         let url = URL(string: "https://openapi.naver.com/v1/search/book.json?query=\(text)&display=100")!
         let header = HTTPHeaders([
-            "X-Naver-Client-Id": "",
-            "X-Naver-Client-Secret": ""
+            "X-Naver-Client-Id": APIKey.naverClientId,
+            "X-Naver-Client-Secret": APIKey.naverClientSecret
         ])
         
         AF.request(url, method: .get, headers: header)
