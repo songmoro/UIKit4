@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Alamofire
 
 class MarketViewController: UIViewController {
     var items: [Coin] = []
@@ -61,19 +60,15 @@ extension MarketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func request() {
-        let url = URL(string: "https://api.upbit.com/v1/market/all")!
-        
-        AF.request(url, method: .get)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: [Coin].self) {
-                switch $0.result {
-                case .success(let coins):
-                    self.items = coins
-                    self.tableView.reloadData()
-                default:
-                    break
-                }
+        NetworkAPI.market.call(of: [Coin].self) {
+            switch $0 {
+            case .success(let coins):
+                self.items = coins
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
+        }
     }
 }
 

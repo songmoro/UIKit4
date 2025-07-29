@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import SnapKit
 
 class BookViewContoller: UIViewController {
@@ -97,44 +96,17 @@ extension BookViewContoller: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func request(_ text: String) {
-        let url = URL(string: "https://openapi.naver.com/v1/search/book.json?query=\(text)&display=100")!
-        let header = HTTPHeaders([
-            "X-Naver-Client-Id": APIKey.naverClientId,
-            "X-Naver-Client-Secret": APIKey.naverClientSecret
-        ])
-        
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: BookResponse.self) {
-                switch $0.result {
-                case .success(let book):
-                    self.item = book.items
-                    self.tableView.reloadData()
-                default:
-                    break
-                }
-            }
-    }
-    
     func requestKakao(_ text: String) {
-        let url = URL(string: "https://dapi.kakao.com/v3/search/book?query=\(text)&size=20&page=\(page)")!
-        let header = HTTPHeaders([
-            "Authorization": APIKey.kakaoAuthorization
-        ])
-        
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: KakaoBookResponse.self) {
-                switch $0.result {
-                case .success(let book):
-                    self.item2.append(contentsOf: book.documents)
-                    self.meta = book.meta
-                    self.tableView.reloadData()
-                default:
-                    break
-                }
+        NetworkAPI.book(query: text, page: page, size: 20).call(of: KakaoBookResponse.self) {
+            switch $0 {
+            case .success(let book):
+                self.item2.append(contentsOf: book.documents)
+                self.meta = book.meta
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
+        }
     }
 }
 
